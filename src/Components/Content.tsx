@@ -27,6 +27,7 @@ function Content() {
   async function agregarCarrito(productoId: number) {
     const getProductos = async () => {
       const data = await fetchData(`http://localhost:3000/cart/${productoId}`);
+      localStorage.setItem("carritoCantidad", JSON.stringify(data.length +1));
       console.log(data);
     };
     getProductos();
