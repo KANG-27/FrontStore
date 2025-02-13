@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchData } from "../api/api";
 
 interface Producto {
   id: number;
@@ -13,30 +14,22 @@ function Content() {
   const [productos, setProductos] = useState<Producto[]>([]);
 
   useEffect(() => {
-    //LLamado api
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/product");
-        const data: Producto[] = await response.json();
-
+    const getProductos = async () => {
+      const data = await fetchData("http://localhost:3000/product");
+      if (data) {
         setProductos(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    getProductos();
   }, []);
 
   async function agregarCarrito(productoId: number) {
-    try {
-      const response = await fetch(`http://localhost:3000/cart/${productoId}`);
-      const data: Producto[] = await response.json();
+    const getProductos = async () => {
+      const data = await fetchData(`http://localhost:3000/cart/${productoId}`);
       console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    };
+    getProductos();
   }
 
   return (
